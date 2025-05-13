@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:seminari_flutter/components/my_textfield.dart';
 import 'package:seminari_flutter/components/my_button.dart';
-import 'package:seminari_flutter/services/auth_service.dart';
+import 'package:seminari_flutter/provider/auth_provider.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -11,7 +12,7 @@ class LoginPage extends StatelessWidget {
   final passwordController = TextEditingController();
 
   void signUserIn(BuildContext context) async {
-    final authService = AuthService();
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
     final email = emailController.text;
     final password = passwordController.text;
@@ -21,12 +22,12 @@ class LoginPage extends StatelessWidget {
       return;
     }
 
-    final result = await authService.login(email, password);
+    final success = await authProvider.login(email, password);
 
-    if (result.containsKey('error')) {
-      _showError(context, result['error']);
-    } else {
+    if (success) {
       context.go('/');
+    } else {
+      _showError(context, authProvider.error ?? 'Error al iniciar sesión');
     }
   }
 

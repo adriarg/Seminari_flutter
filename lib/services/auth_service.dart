@@ -31,10 +31,24 @@ class AuthService {
       );
 
       print("Resposta rebuda amb codi: ${response.statusCode}");
+      print("Resposta body: ${response.body}");
 
       if (response.statusCode == 200) {
-        return json.decode(response.body);
+        final responseData = json.decode(response.body);
+        print("Datos recibidos: $responseData");
+        print("Tipo de datos: ${responseData.runtimeType}");
+        
+        if (responseData is Map<String, dynamic>) {
+          print("Claves disponibles: ${responseData.keys.toList()}");
+          if (responseData.containsKey('user')) {
+            print("Datos de usuario: ${responseData['user']}");
+          }
+        }
+        
+        isLoggedIn = true;
+        return responseData;
       } else {
+        print("Error en el login: ${response.body}");
         return {'error': 'email o contrasenya incorrectes'};
       }
     } catch (e) {

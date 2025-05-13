@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:seminari_flutter/provider/auth_provider.dart';
 import 'package:seminari_flutter/provider/users_provider.dart';
 import 'package:seminari_flutter/routes/app_router.dart';
 import 'package:provider/provider.dart';
@@ -16,8 +17,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => UserProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => UserProvider()),
+        ChangeNotifierProvider(create: (context) => AuthProvider()),
+      ],
       child: MaterialApp.router(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner:

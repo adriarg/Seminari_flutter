@@ -1,3 +1,10 @@
+##Referències
+
+- Videos de l'assignatura
+- Gemini AI
+
+Video de Youtube: https://youtu.be/9ubFO-RBUIY
+
 # seminari_flutter
 
 A new Flutter project.
